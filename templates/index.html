@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  let table = '';
+  function init() {
+    $("#content").text("");
+    $.get("hosts", function(hosts) {
+      table = '<table><thead><tr><th>Host</th><th>MAC</th><th>IP</th><th>Status</th><th>Action</th></tr></thead><tbody>';
+      $.each(hosts["hosts"], function(index, element) {
+	table += '<tr>';
+        table += '<td>'+element["host"]+'</td>';
+	table += '<td>'+element["mac"]+'</td>';
+        table += '<td>'+element["ip"]+'</td>';
+        table += '<td>'+element["status"]+'</td>';
+        table += '<td><button onclick="$.get(\'deploy/'+element["mac"]+'\');">Deploy</button></td>';
+        table += '</tr>';
+      });
+      table += '</tbody></table>';
+      $("#content").append(table);
+    });
+  }
+  init();
+  setInterval(init, 10*1000);
+});
+</script>
+</head>
+<body>
+<div id="content"></div>
+</body>
+</html>
