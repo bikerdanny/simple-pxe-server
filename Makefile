@@ -26,8 +26,10 @@ create_container:
                                      --env DHCP_BROADCAST_ADDRESS="$(DHCP_BROADCAST_ADDRESS)" \
                                      --env DHCP_GATEWAY="$(GATEWAY)" \
                                      --env DHCP_NEXT_SERVER="$(IP)" \
-				     --env PXE_CLIENT_1="client1,BC:24:11:DA:A2:7E,10.0.4.11" \
-                                     --env PXE_CLIENT_2="client2,BC:24:11:D4:D5:18,10.0.4.12" \
+				     --env PXE_CLIENT_1="$(PXE_CLIENT_1)" \
+                                     --env PXE_CLIENT_2="$(PXE_CLIENT_2)" \
+                                     --env PXE_CLIENT_3="$(PXE_CLIENT_3)" \
+                                     --env PXE_CLIENT_4="$(PXE_CLIENT_4)" \
 				     --env ROOT_PASSWORD="$(ROOT_PASSWORD)" \
 				     --volume=./repo/rocky:/var/lib/tftpboot/rocky \
 				     --volume=./repo:/var/www/repo \
