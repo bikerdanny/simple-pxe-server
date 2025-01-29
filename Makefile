@@ -1,16 +1,4 @@
-SUBNET=10.0.4.0
-CIDR=24
-GATEWAY=10.0.4.1
-PARENT_INTERFACE=eth0
-NETWORK_NAME=pxe
-CONTAINER_NAME=pxe
-TZ=Europe/Berlin
-DHCP_NETMASK=255.255.255.0
-DHCP_RANGE_START=10.0.4.100
-DHCP_RANGE_END=10.0.4.200
-DHCP_BROADCAST_ADDRESS=10.0.4.255
-IP=10.0.4.254
-ROOT_PASSWORD=password
+include config
 
 all: remove_container remove_network build create_network create_container start_container
 
