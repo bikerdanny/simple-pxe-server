@@ -34,7 +34,7 @@ create_container:
 				     --volume=./repo/rocky:/var/lib/tftpboot/rocky \
 				     --volume=./repo:/var/www/repo \
 				     --publish=$(PORT):5000 \
-                                    bikerdanny/pxe:0.1
+                                    bikerdanny/simple-pxe-server:0.1
 	sudo podman network connect --ip=$(IP) $(NETWORK_NAME) $(CONTAINER_NAME)
 
 start_container:
