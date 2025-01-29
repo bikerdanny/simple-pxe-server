@@ -2,6 +2,14 @@ include config
 
 all: remove_container remove_network build create_network create_container start_container
 
+create_repo:
+	test -f Rocky-9.5-x86_64-dvd.iso || wget https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.5-x86_64-dvd.iso
+	mkdir iso
+	sudo mount -o loop Rocky-9.5-x86_64-dvd.iso iso
+	mkdir -p repo/rocky/9.5
+	sudo rsync -a iso/ repo/rocky/9.5/
+	sudo umount iso
+
 build: Dockerfile
 	sudo podman build -t bikerdanny/simple-pxe-server:0.1 .
 
