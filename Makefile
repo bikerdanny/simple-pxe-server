@@ -33,7 +33,7 @@ create_container:
 				     --env ROOT_PASSWORD="$(ROOT_PASSWORD)" \
 				     --volume=./repo/rocky:/var/lib/tftpboot/rocky \
 				     --volume=./repo:/var/www/repo \
-				     --publish=5000:5000 \
+				     --publish=$(PORT):5000 \
                                     bikerdanny/pxe:0.1
 	sudo podman network connect --ip=$(IP) $(NETWORK_NAME) $(CONTAINER_NAME)
 
