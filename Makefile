@@ -39,6 +39,7 @@ create_container:
                                      --env PXE_CLIENT_3="$(PXE_CLIENT_3)" \
                                      --env PXE_CLIENT_4="$(PXE_CLIENT_4)" \
 				     --env ROOT_PASSWORD="$(ROOT_PASSWORD)" \
+				     --env APPEND_OPTIONS="$(APPEND_OPTIONS)" \
 				     --volume=./repo/rocky:/var/lib/tftpboot/rocky \
 				     --volume=./repo:/var/www/repo \
 				     --publish=$(PORT):5000 \

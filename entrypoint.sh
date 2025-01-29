@@ -36,7 +36,7 @@ label local
 label rocky9
   menu label Rocky Linux 9 Installer
   kernel rocky/9.5/images/pxeboot/vmlinuz
-  append initrd=rocky/9.5/images/pxeboot/initrd.img inst.repo=http://${DHCP_NEXT_SERVER}/rocky/9.5/ inst.ks=http://${DHCP_NEXT_SERVER}/rocky9.ks
+  append initrd=rocky/9.5/images/pxeboot/initrd.img inst.repo=http://${DHCP_NEXT_SERVER}/rocky/9.5/ inst.ks=http://${DHCP_NEXT_SERVER}/rocky9.ks ${APPEND_OPTIONS}
 EOF1
 
 cat << EOF > /opt/rest/deploy.sh
@@ -61,14 +61,14 @@ menu title PXE Boot Menu
 label rocky9
   menu label Rocky Linux 9 Installer
   kernel rocky/9.5/images/pxeboot/vmlinuz
-  append initrd=rocky/9.5/images/pxeboot/initrd.img inst.repo=http://${DHCP_NEXT_SERVER}/rocky/9.5/ inst.ks=http://${DHCP_NEXT_SERVER}/rocky9.ks
+  append initrd=rocky/9.5/images/pxeboot/initrd.img inst.repo=http://${DHCP_NEXT_SERVER}/rocky/9.5/ inst.ks=http://${DHCP_NEXT_SERVER}/rocky9.ks ${APPEND_OPTIONS}
 EOF2
 
 echo "OK"
 EOF
 chmod +x /opt/rest/deploy.sh
 
-cat << EOF > /var/www/repo/rocky9.ks
+test -f /var/www/repo/rocky9.ks || cat << EOF > /var/www/repo/rocky9.ks
 # Use graphical install
 graphical
 repo --name="AppStream" --baseurl=http://${DHCP_NEXT_SERVER}/rocky/9.5/AppStream
@@ -117,6 +117,8 @@ rootpw --iscrypted --allow-ssh $(mkpasswd --method=sha-512 ${ROOT_PASSWORD})
 %post --nochroot
 curl http://${DHCP_NEXT_SERVER}:5000/finish
 %end
+
+bootloader --append="${APPEND_OPTIONS} "
 EOF
 
 # HTTP server
