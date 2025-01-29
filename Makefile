@@ -15,7 +15,7 @@ ROOT_PASSWORD=password
 all: remove_container remove_network build create_network create_container start_container
 
 build: Dockerfile
-	sudo podman build -t bikerdanny/pxe:0.1 .
+	sudo podman build -t bikerdanny/simple-pxe-server:0.1 .
 
 list_networks:
 	sudo podman network ls
