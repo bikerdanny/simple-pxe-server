@@ -71,7 +71,6 @@ chmod +x /opt/rest/deploy.sh
 test -f /var/www/repo/rocky9.ks || cat << EOF > /var/www/repo/rocky9.ks
 # Use graphical install
 graphical
-repo --name="AppStream" --baseurl=http://${DHCP_NEXT_SERVER}/rocky/9.5/AppStream
 
 %addon com_redhat_kdump --enable --reserve-mb='auto'
 
@@ -90,6 +89,7 @@ $(for client in ${!PXE_CLIENT_@}; do host=(${!client//,/ }); echo "network --boo
 
 # Use network installation
 url --url="http://${DHCP_NEXT_SERVER}/rocky/9.5/BaseOS"
+repo --name="AppStream" --baseurl=http://${DHCP_NEXT_SERVER}/rocky/9.5/AppStream
 
 %packages
 @^minimal-environment
@@ -113,6 +113,11 @@ timezone Europe/Berlin --utc
 
 # Root password
 rootpw --iscrypted --allow-ssh $(mkpasswd --method=sha-512 ${ROOT_PASSWORD})
+
+%post --interpreter=/bin/bash --log=/root/kickstart-post.log
+$(for client in ${!PXE_CLIENT_@}; do host=(${!client//,/ }); echo "echo '${host[2]} ${host[0]}' >> /etc/hosts"; done)
+grep \$(hostname -I) /etc/hosts | cut -d' ' -f2 > /etc/hostname
+%end
 
 %post --nochroot
 curl http://${DHCP_NEXT_SERVER}:5000/finish
